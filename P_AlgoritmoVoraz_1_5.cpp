@@ -32,7 +32,7 @@ main(){
     /* Entrada de datos */
         cout<<"Ingrese el presupuesto maximo para las compras: ";
             cin>>w;
-        cout<<"\nIngrese el numero de objetos que habra en total: ";
+        cout<<"\nIngrese el numero de productos que habra en total: ";
             cin>>nObjetos;
 
         /*Ciclo para guardar el peso y valor de cada objeto*/
@@ -71,7 +71,7 @@ main(){
         }
 
         cout<<"\n\n";
-        cout<<"\tVector de seleccion: "<<endl;
+        cout<<"\tResultados: "<<endl;
             mostrarR(nObjetos, peso, valor, nombre);
         cout<<"\n"<<endl;
         cout<<"Volver a ejecutar, s/n? ";
@@ -142,6 +142,6 @@ void mostrarR(int nObjetos, float peso[], float valor[], string nombre[]){
             pesoT = pesoT + (x[j]*peso[j]*valor[j]);
         }
 
-        cout<<"\n\n\tValor total: "<<fixed<<setprecision(2)<<valorT<<endl;
+        cout<<"\n\n\tProductos comprados: "<<fixed<<setprecision(2)<<valorT<<endl;
         cout<<"\tPrecio total: "<<fixed<<setprecision(2)<<pesoT<<endl;
 }
