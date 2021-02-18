@@ -3,13 +3,14 @@ Problema de la mochila (fraccionada)
 Implentación de un Algoritmo Voraz
 */
 #include<iostream>
+#include<iomanip>
 using namespace std;
 int i, j;
 //Vector de selección
 float x[' '];
 
-void mostrarD(int nObjetos, float peso[], float valor[],string nombre[], float w);
-void mostrarR(int nObjetos, float peso[], float valor[]);
+void mostrarD(int nObjetos, float peso[], float valor[], string nombre[], float w);
+void mostrarR(int nObjetos, float peso[], float valor[], string nombre[]);
 int seleccionVoraz(float x[], float peso[], float valor[], int n);
 
 main(){
@@ -26,7 +27,7 @@ main(){
         suma=0, w=0;
         system("cls");
         cout<<"\nImplementacion de un algoritmo Voraz"<<endl;
-        cout<<"Compra de mercancia\n"<<endl;
+        cout<<"Compra de producto para una tienda\n"<<endl;
 
     /* Entrada de datos */
         cout<<"Ingrese el presupuesto maximo para las compras: ";
@@ -36,15 +37,17 @@ main(){
 
         /*Ciclo para guardar el peso y valor de cada objeto*/
         for(j=1; j<=nObjetos; j++){
-        	cout<<"\nIngrese el nombre del objeto "<<j<<": ";
+        	cout<<"\nIngrese el nombre del producto "<<j<<": ";
                 cin>>nombre[j];
-            cout<<"\nIngrese el precio del producto "<<j<<": ";
+            cout<<"Ingrese el precio del producto por pza/kg: ";
                 cin>>peso[j];
-            cout<<"Ingrese el valor del objeto "<<j<<": ";
+            cout<<"Ingrese la cantidad del producto vendido en la semana (pza/kg): ";
                 cin>>valor[j];
         }
+
         system("cls");
-        cout<<"\nProblema de la mochila, implementacion de un algoritmo Voraz \n"<<endl;
+        cout<<"\nImplementacion de un algoritmo Voraz"<<endl;
+        cout<<"Compra de producto para una tienda\n"<<endl;
 
     /* Mostrar datos */
         cout<<"\tDatos registrados\n"<<endl;
@@ -58,18 +61,18 @@ main(){
     /* Algoritmo Voraz */
         while(suma<w){
             i=seleccionVoraz(x, peso, valor, nObjetos);
-            if (suma + peso[i] <= w){
+            if (suma + peso[i]*valor[i] <= w){
                 x[i]=1;
-                suma=suma+peso[i];
+                suma=suma+ (peso[i]*valor[i]);
             }else{
-                x[i]=((w-suma)/peso[i]);
+                x[i]=((w-suma)/(peso[i]*valor[i]));
                 suma=w;
             }
         }
 
         cout<<"\n\n";
         cout<<"\tVector de seleccion: "<<endl;
-            mostrarR(nObjetos, peso, valor);
+            mostrarR(nObjetos, peso, valor, nombre);
         cout<<"\n"<<endl;
         cout<<"Volver a ejecutar, s/n? ";
             cin>>res;
@@ -90,10 +93,10 @@ void mostrarD(int nObjetos, float peso[], float valor[],string nombre[], float w
         for(j=1; j<=nObjetos; j++){
     cout<<"\t"<<nombre[j];}
 
-    cout<<"\nPeso:   ";
+    cout<<"\nPrecio:   ";
         for(j=1; j<=nObjetos; j++){
             cout<<"\t"<<peso[j];}
-    cout<<"\nValor:   ";
+    cout<<"\nP. vendido:   ";
         for(j=1; j<=nObjetos; j++){
             cout<<"\t"<<valor[j];}
 }
@@ -112,21 +115,33 @@ int seleccionVoraz(float x[], float peso[], float valor[], int n){
     return indice;
 }
 /* función para mostrar resultados */
-void mostrarR(int nObjetos, float peso[], float valor[]){
+void mostrarR(int nObjetos, float peso[], float valor[], string nombre[]){
     /* Mostrar resultados */
-    cout<<"\nObjeto: ";
+    cout<<"\nNombre: ";
         for(j=1; j<=nObjetos; j++){
-            cout<<"\t"<<j;}
-    cout<<"\nVector: ";
+            cout<<"\t"<<nombre[j];}
+    cout<<"\nPrecio: ";
         for(j=1; j<=nObjetos; j++){
-            cout<<"\t"<<x[j];}
+            cout<<"\t"<<peso[j];}
+    cout<<"\nP. vendido: ";
+        for(j=1; j<=nObjetos; j++){
+            cout<<"\t"<<valor[j];}
+    cout<<"\n\t      -----------------------------------------------------"<<endl;
+    cout<<"\ntotal/producto:";
+        for(j=1; j<=nObjetos; j++){
+            cout<<"\t"<<peso[j]*valor[j]*x[j];}
+
+    cout<<"\n\nVector: ";
+        for(j=1; j<=nObjetos; j++){
+            cout<<"\t"<<fixed<<setprecision(3)<<x[j];}
 
         float valorT=0, pesoT=0;
         /*Valor total*/
         for(j=1; j<=nObjetos; j++){
             valorT = valorT + (x[j]*valor[j]);
-            pesoT = pesoT + (x[j]*peso[j]);
+            pesoT = pesoT + (x[j]*peso[j]*valor[j]);
         }
-        cout<<"\n\n\tValor total: "<<valorT<<endl;
-        cout<<"\tPeso total: "<<pesoT<<endl;
+
+        cout<<"\n\n\tValor total: "<<fixed<<setprecision(2)<<valorT<<endl;
+        cout<<"\tPrecio total: "<<fixed<<setprecision(2)<<pesoT<<endl;
 }
